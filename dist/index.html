@@ -4,11 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="header">header</div>
-    <div class="main">Main</div>
-    <div class="footer">footer</div>
+    <header>
+        <h1>Todo List</h1>
+    </header>
+    <main>
+        <h2 class="project-title">Default Project</h2>
+        <div class="main-container">
+            <div class="todo-item" data-id="4">
+                <input type="checkbox" class="dot-checkmark">
+                <div class="item-content">
+                    <description>Go on a hike</description>
+                </div>
+            </div>
+            <div class="todo-item" data-id="5">
+                <input type="checkbox" class="dot-checkmark">
+                <div class="item-content">
+                    <description>Go on a run</description>
+                </div>
+            </div>
+            <div class="todo-item" data-id="6">
+                <input type="checkbox" class="dot-checkmark">
+                <div class="item-content">
+                    <description>Go swim</description>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+         <p>Copyright 2024</p>
+    </footer>
     <script src="./main.js"></script>
 </body>
 </html>

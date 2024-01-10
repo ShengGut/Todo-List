@@ -1,10 +1,3 @@
-export function changeTitle(todoItem, newTitle) {
-    if (typeof todoItem !== "object" || todoItem === null)
-        throw new Error("Invalid todoItem. An object is expected.");
-
-    todoItem.title = newTitle;
-}
-
 export function changeDescription(todoItem, newDescription) {
     if (typeof todoItem !== "object" || todoItem === null)
         throw new Error("Invalid todoItem. An object is expected.");
@@ -27,9 +20,9 @@ export function changePriority(todoItem, newPriority) {
     todoItem.priority = newPriority;
 }
 
-export function changeStatus(todoItem, newStatus) {
+export function changeStatus(todoItem) {
     if (typeof todoItem !== "object" || todoItem === null)
         throw new Error("Invalid todoItem. An object is expected.");
 
-    todoItem.status = newStatus;
+    todoItem.status = todoItem.status === "completed" ? "incomplete": "completed";
 }
