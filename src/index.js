@@ -9,27 +9,11 @@ import handleTodoFormInput from './todoFormHandler.js';
 
 const p1 = createProjectList();
 
-// const todoOne = createTodoItem("Write 1k words", "01-30-2024", "medium");
-// const todoTwo = createTodoItem();
-
-
-
-// p1.addTodoItems(todoOne)
-// p1.addTodoItems(todoTwo)
-// console.log(p1.getTodoItems())
-
-// changeToDoItemModule.changeDescription(todoTwo, "Run around the neighborhood for 30 mins");
-// changeToDoItemModule.changeDueDate(todoTwo, "2024-01-01");
-// changeToDoItemModule.changePriority(todoTwo, "High");
-// changeToDoItemModule.changeStatus(todoTwo);
-
-// p1.deleteTodoItem(2);
-// console.log(p1.getTodoItems())
-toggleCompletion(p1)
+toggleCompletion();
 
 const t1 = createTodoItem("Go on a hike", "medium");
 const t2 = createTodoItem("Go on a run", "medium");
-const t3 = createTodoItem("Go swim",  "medium");
+const t3 = createTodoItem("Go swim", "medium");
 
 createDOMTodo(t1);
 createDOMTodo(t2);
@@ -43,7 +27,8 @@ console.log(t1);
 console.log(t2);
 console.log(t3);
 console.log(p1.getTodoItems());
+console.log(p1);
 
 const todoInputElement = document.querySelector('.create-todo');
 
-handleTodoFormInput(todoInputElement);
+handleTodoFormInput(todoInputElement, p1);

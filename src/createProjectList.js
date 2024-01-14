@@ -3,6 +3,7 @@
         
         return {
             projectName: projectName,
+            todoItems: todoItems,
             getTodoItems: () => [...todoItems],
             addTodoItems: (todoItem) => todoItems.push(todoItem),
             deleteTodoItem: (todoId) => {

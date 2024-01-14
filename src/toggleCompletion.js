@@ -1,23 +1,18 @@
-import changeStatus from './changeToDoItem.js';
-
 export default function toggleCompletion() {
     document.addEventListener("DOMContentLoaded", function () {
+        const mainContainer = document.querySelector(".main-container");
 
-    
-        const dotCheckmarks = document.querySelectorAll('.dot-checkmark');
-    
-        dotCheckmarks.forEach(dotCheckmark => {
-            dotCheckmark.addEventListener('change', function () {
+        mainContainer.addEventListener('change', function (event) {
+            const dotCheckmark = event.target.closest('.dot-checkmark');
 
+            if (dotCheckmark) {
                 const todoItem = dotCheckmark.closest('.todo-item');
                 const isChecked = dotCheckmark.checked;
-    
+
                 todoItem.classList.toggle('completed', isChecked);
-               
 
                 console.log(`Todo item "${todoItem.querySelector('.item-content').innerText}" is ${isChecked ? 'checked' : 'unchecked'}`);
-            });
+            }
         });
     });
-    
 }
