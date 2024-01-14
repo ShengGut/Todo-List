@@ -12,9 +12,8 @@ export default function toggleCompletion() {
                 const todoItem = dotCheckmark.closest('.todo-item');
                 const isChecked = dotCheckmark.checked;
     
-
                 todoItem.classList.toggle('completed', isChecked);
-    
+               
 
                 console.log(`Todo item "${todoItem.querySelector('.item-content').innerText}" is ${isChecked ? 'checked' : 'unchecked'}`);
             });

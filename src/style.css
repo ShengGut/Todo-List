@@ -59,3 +59,33 @@ main {
     appearance: auto;
     clip-path: circle(50% at 50% 50%);
 }
+
+.item-content {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.nested {
+    grid-column: 1 / 2;
+}
+
+dueDate, priority {
+    font-size: 0.8rem;
+}
+
+.completed description {
+    text-decoration: line-through;
+}
+
+.create-todo {
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 99.5%;
+    outline: none;
+    box-shadow: none;
+    padding: 4px;
+}
+
+.project-title {
+    text-decoration: underline;
+}
