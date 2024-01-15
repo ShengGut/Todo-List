@@ -6,6 +6,7 @@ import * as changeToDoItemModule from './changeToDoItem.js';
 import toggleCompletion from './toggleCompletion.js';
 import createDOMTodo from './createDOMTodo.js';
 import handleTodoFormInput from './todoFormHandler.js';
+import deleteTodo from './deleteTodoItem.js';
 
 const p1 = createProjectList();
 
@@ -23,12 +24,10 @@ p1.addTodoItems(t1);
 p1.addTodoItems(t2);
 p1.addTodoItems(t3);
 
-console.log(t1);
-console.log(t2);
-console.log(t3);
 console.log(p1.getTodoItems());
 console.log(p1);
 
 const todoInputElement = document.querySelector('.create-todo');
 
 handleTodoFormInput(todoInputElement, p1);
+deleteTodo();

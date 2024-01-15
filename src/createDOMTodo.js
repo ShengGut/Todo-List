@@ -14,6 +14,8 @@ export default function createDOMTodo(todo) {
 
     const descriptionElement = document.createElement('description');
     descriptionElement.textContent = todo.description;
+    const deletebtnElement = document.createElement('deletebtn');
+    deletebtnElement.textContent = "X";
 
     const nestedDiv = document.createElement('div');
     nestedDiv.className = 'nested';
@@ -29,6 +31,7 @@ export default function createDOMTodo(todo) {
     nestedDiv.appendChild(dueDateElement);
 
     itemContent.appendChild(descriptionElement);
+    itemContent.appendChild(deletebtnElement);
     itemContent.appendChild(nestedDiv);
     todoElement.appendChild(checkbox);
     todoElement.appendChild(itemContent);

@@ -89,3 +89,7 @@ dueDate, priority {
 .project-title {
     text-decoration: underline;
 }
+
+deletebtn {
+    cursor:pointer;
+}
