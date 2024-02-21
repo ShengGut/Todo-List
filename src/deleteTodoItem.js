@@ -1,4 +1,4 @@
-export default function deleteTodo() {
+export default function deleteTodo(activeProject) {
     document.addEventListener('DOMContentLoaded', function() {
         const mainContainer = document.querySelector('.main-container');
         mainContainer.addEventListener('click', function(event) {
@@ -8,14 +8,17 @@ export default function deleteTodo() {
                 const todoItem = event.target.closest('.todo-item');
                 if (todoItem) {
                     const todoItemId = todoItem.getAttribute('data-id');
-                    deleteTodoItem(todoItemId);
+                    const todoItemName = todoItem.querySelector('description').textContent;
+                    activeProject.deleteTodoItem(parseInt(todoItemId)); // logically removes from array
+                    deleteTodoItemDOM(todoItemId); // removes from DOM
+                    console.log(`Todo Item deleted: ${todoItemName}`)
                 }
             }
         });
     });
 }
 
-function deleteTodoItem(todoItemId) {
+function deleteTodoItemDOM(todoItemId) {
     const todoItem = document.querySelector(`.todo-item[data-id="${todoItemId}"]`);
     if (todoItem) 
         todoItem.remove();

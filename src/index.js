@@ -7,8 +7,40 @@ import toggleCompletion from './toggleCompletion.js';
 import createDOMTodo from './createDOMTodo.js';
 import handleTodoFormInput from './todoFormHandler.js';
 import deleteTodo from './deleteTodoItem.js';
+import handleNewProject from './newProjectHandler.js';
 
-const p1 = createProjectList();
+const defaultProject = createProjectList("Default");
+const project2 = createProjectList("Project 2");
+let activeProject = defaultProject;
+
+const projectLists = [];
+projectLists.push(defaultProject);
+projectLists.push(project2);
+
+// Event listener for project titles
+document.querySelectorAll('.project-title').forEach(element => {
+    element.addEventListener('click', function() {
+        const projectName = element.textContent; // Get the clicked project name
+        const clickedProject = projectLists.find(project => project.projectName === projectName); // Find the project in the array
+
+        // Change activeProject based on the clicked project
+        if (clickedProject) {
+            activeProject = clickedProject;
+            handleTodoFormInput(activeProject);
+            console.log(`Now project ${activeProject.projectName}`);
+            console.log(activeProject.getTodoItems());
+            // Clear DOM elements for mainContainer
+            const mainContainer = document.querySelector('.main-container');
+            mainContainer.innerHTML = "";
+
+            // Load todo elements for the new active project
+            activeProject.getTodoItems().forEach(todoItem => {
+                createDOMTodo(todoItem);
+            });
+        }
+    });
+});
+
 
 toggleCompletion();
 
@@ -16,18 +48,40 @@ const t1 = createTodoItem("Go on a hike", "medium");
 const t2 = createTodoItem("Go on a run", "medium");
 const t3 = createTodoItem("Go swim", "medium");
 
-createDOMTodo(t1);
+defaultProject.addTodoItems(t1);
+defaultProject.addTodoItems(t2);
+defaultProject.addTodoItems(t3);
+
+const p1 = createTodoItem("Study math", "medium");
+const p2 = createTodoItem("Study history", "medium");
+const p3 = createTodoItem("Study CS", "medium");
+
+project2.addTodoItems(p1);
+project2.addTodoItems(p2);
+project2.addTodoItems(p3);
+
+
+createDOMTodo(t1); // creates DOM elements for tasks 1-3 in mainContainer for the current defaultProject
 createDOMTodo(t2);
 createDOMTodo(t3);
 
-p1.addTodoItems(t1);
-p1.addTodoItems(t2);
-p1.addTodoItems(t3);
+// console.log(defaultProject);
+// console.log(defaultProject.getTodoItems());
 
-console.log(p1.getTodoItems());
-console.log(p1);
+// console.log(project2);
+// console.log(project2.getTodoItems());
+handleTodoFormInput(activeProject);
+deleteTodo(activeProject);
 
-const todoInputElement = document.querySelector('.create-todo');
+document.querySelector('.new-list').addEventListener('click', function() {
+    handleNewProject();
+});
 
-handleTodoFormInput(todoInputElement, p1);
-deleteTodo();
+
+
+
+
+function removeTodoFormInputListener() {
+    let todoInputElement = document.querySelector('.create-todo');
+    todoInputElement.removeEventListener('change', handleTodoInputChange);
+}

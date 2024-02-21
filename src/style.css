@@ -88,8 +88,19 @@ dueDate, priority {
 
 .project-title {
     text-decoration: underline;
+    display: inline-block;
+    border: 2px solid red;
+    padding: 5px;
+    cursor: pointer;
 }
 
 deletebtn {
-    cursor:pointer;
+    cursor: pointer;
+}
+
+.new-list {
+    display: inline-block;
+    border: 2px solid red;
+    padding: 5px;
+    cursor: pointer;
 }
