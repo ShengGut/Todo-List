@@ -13,20 +13,16 @@ export default function handleNewProject(inputElement) {
     const projectName = prompt("Enter the name of the new project:");
     
     if (projectName) {
-        const newProject = createProjectList(projectName);
+        const newProject = createProjectList(projectName); //creates a new project with the name
+
+        // create new DOM element in main, added before class new-list
+        const newProjectElement = document.createElement('h2');
+        newProjectElement.textContent = projectName;
+        newProjectElement.classList.add('project-title');
+ 
+        const newProjectListElement = document.querySelector('.new-list');
+        newProjectListElement.parentNode.insertBefore(newProjectElement, newProjectListElement);
         
-        // Update project title in the UI
-        const projectTitleElement = document.querySelector('.project-title');
-        projectTitleElement.textContent = projectName;
-        
-        // Update todo task space with tasks specific to the new project
-        const mainContainer = document.querySelector('.main-container');
-        mainContainer.innerHTML = ""; // Clear existing todo items
-        
-        newProject.getTodoItems().forEach(todoItem => {
-            createDOMTodo(todoItem); // Create DOM elements for todo items
-        });
-        
-        console.log(newProject); // Console log the new project
+      
     }
 }
