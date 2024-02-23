@@ -8,11 +8,14 @@ import createDOMTodo from './createDOMTodo.js';
 import handleTodoFormInput from './todoFormHandler.js';
 import deleteTodo from './deleteTodoItem.js';
 import handleNewProject from './newProjectHandler.js';
-import projectManager from './projectManager.js';
 import switchProject from './switchProject.js';
+
 
 document.querySelector('.new-list').addEventListener('click', function() {
     handleNewProject();
+    activeProject = switchProject(defaultProject); // Update activeProject so that todos can be delated in the actively-selected project
+    handleTodoFormInput(activeProject);
+    deleteTodo(activeProject);
 });
 
 const defaultProject = createProjectList("Default");
@@ -43,6 +46,6 @@ createDOMTodo(t1);
 createDOMTodo(t2);
 createDOMTodo(t3);
 
+
 handleTodoFormInput(activeProject);
 deleteTodo(activeProject);
-

@@ -17,15 +17,17 @@ export default function switchProject(defaultProject) {
                 handleTodoFormInput(activeProject);
                 console.log(`Now project ${activeProject.projectName}`);
                 console.log(activeProject.getTodoItems());
-                // Clear DOM elements for mainContainer
+                // Clear DOM elements for mainContainer when switching to the selected project
                 const mainContainer = document.querySelector('.main-container');
                 mainContainer.innerHTML = "";
 
-                // Load todo elements for the new active project
+                // Load todo elements for the chosen, active project
                 activeProject.getTodoItems().forEach(todoItem => {
                     createDOMTodo(todoItem);
                 });
             }
         }
     });
+
+    return activeProject; // Return the active project
 }
