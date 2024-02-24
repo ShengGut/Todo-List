@@ -1,5 +1,5 @@
 import projectManager from './projectManager.js';
-
+import { saveProjectManager } from './projectManager.js';
 export default function createProjectList(projectName) {
     const todoItems = [];
     const project = {
@@ -14,6 +14,7 @@ export default function createProjectList(projectName) {
 
     // Add the newly created project to the project manager's list
     projectManager.addProjectToList(project);
+    saveProjectManager(projectManager);
     console.log(`New project created: ${project.projectName}`);
     return project;
 }

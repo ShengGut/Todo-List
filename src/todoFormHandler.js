@@ -1,11 +1,11 @@
 import createTodoItem from "./createTodoItem";
 import createDOMTodo from "./createDOMTodo";
-
+import { saveProjectToLocal, saveTodoIdToLocal, saveTodoToLocal } from "./handleLocalStorage";
 let todoInputEventListener = null;
 
 export default function handleTodoFormInput(activeProject) {
     
-    console.log(`Handler start: ${activeProject.projectName}`);
+   // console.log(`Handler start: ${activeProject.projectName}`);
     
     let todoInputElement = document.querySelector('.create-todo');
 
@@ -23,7 +23,9 @@ export default function handleTodoFormInput(activeProject) {
             createDOMTodo(newTodoItem);
             console.log(`Create new todo item: ${newTodoItem.description}, ${newTodoItem.id}, ${newTodoItem.priority} for Project: ${activeProject.projectName}`);
             activeProject.addTodoItems(newTodoItem);
-            
+            saveTodoToLocal(newTodoItem);
+            saveTodoIdToLocal(newTodoItem.id);
+            saveProjectToLocal(activeProject);
             console.log(activeProject.getTodoItems());
             todoInputElement.value = '';
         }

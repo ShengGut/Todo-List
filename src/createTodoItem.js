@@ -1,14 +1,19 @@
+import { isString } from 'antd/es/button';
 import {format, addDays} from 'date-fns';
-let todoIdCounter = 0;
+import { getTodoIdFromLocal } from './handleLocalStorage';
+
+let todoIdCounter = getTodoIdFromLocal() !== null ? getTodoIdFromLocal() : 0;
 
 export default function createTodoItem(description, priority, dueDate, status) {
-  const currentDate = new Date();
-  const formattedDueDate = format(currentDate, 'yyyy-MM-dd');
+    const currentDate = new Date();
+    const formattedDueDate = format(currentDate, 'yyyy-MM-dd');
+    const nextId = ++todoIdCounter;
     return {
-      id: ++todoIdCounter,
-      description: description || 'No description',
-      priority: priority || 'low',
-      dueDate: dueDate || formattedDueDate,
-      status: "Incomplete"
-  };
+        id: nextId,
+        description: description || 'No description',
+        priority: priority || 'low',
+        dueDate: dueDate || formattedDueDate,
+        status: status || "Incomplete"
+    };
 }
+

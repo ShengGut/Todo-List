@@ -1,6 +1,7 @@
 import projectManager from "./projectManager";
 import handleTodoFormInput from "./todoFormHandler";
 import createDOMTodo from "./createDOMTodo";
+import { saveProjectToLocal } from "./handleLocalStorage";
 
 export default function switchProject(defaultProject) {
     let activeProject = defaultProject;
@@ -25,6 +26,8 @@ export default function switchProject(defaultProject) {
                 activeProject.getTodoItems().forEach(todoItem => {
                     createDOMTodo(todoItem);
                 });
+         
+              saveProjectToLocal(activeProject);
             }
         }
     });
