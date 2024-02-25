@@ -1,5 +1,5 @@
 import createProjectList from "./createProjectList";
-import { saveProjectToLocal } from "./handleLocalStorage";
+import { saveDOMData, saveProjectToLocal } from "./handleLocalStorage";
 
 export default function handleNewProject(inputElement) {
     const projectName = prompt("Enter the name of the new project:");
@@ -15,5 +15,6 @@ export default function handleNewProject(inputElement) {
         const newProjectListElement = document.querySelector('.new-list');
         newProjectListElement.parentNode.insertBefore(newProjectElement, newProjectListElement);
         saveProjectToLocal(newProject);
+        saveDOMData();
     }
 }

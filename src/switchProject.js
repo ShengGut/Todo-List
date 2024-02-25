@@ -32,5 +32,5 @@ export default function switchProject(defaultProject) {
         }
     });
 
-    return activeProject; // Return the active project
+    return activeProject;
 }

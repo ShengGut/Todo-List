@@ -1,4 +1,4 @@
-import { saveTodoToLocal, saveProjectToLocal } from "./handleLocalStorage";
+import { saveTodoToLocal, saveProjectToLocal, saveDOMData } from "./handleLocalStorage";
 
 export default function toggleCompletion(activeProject) {
     document.addEventListener("DOMContentLoaded", function () {
@@ -14,6 +14,7 @@ export default function toggleCompletion(activeProject) {
                 todoItem.classList.toggle('completed', isChecked);
                 saveTodoToLocal(todoItem);
                 saveProjectToLocal(activeProject);
+                saveDOMData();
                 console.log(`Todo item "${todoItem.querySelector('.item-content').innerText}" is ${isChecked ? 'checked' : 'unchecked'}`);
             }
         });

@@ -13,7 +13,7 @@ export default function deleteTodo(activeProject) {
                     const todoItemName = todoItem.querySelector('description').textContent;
                     activeProject.deleteTodoItem(parseInt(todoItemId)); // logically removes from array
                     deleteTodoItemDOM(todoItemId); // removes from DOM
-             //       saveDOMData();
+                    saveDOMData();
                     console.log(`Todo Item deleted: ${todoItemName}`)
                 }
             }

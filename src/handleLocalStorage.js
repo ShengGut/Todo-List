@@ -19,13 +19,22 @@ export function getTodoIdFromLocal() {
     return JSON.parse(localStorage.getItem("todoIdCounterData"));
 }
 
+// going to have to rewrite this so the JSON data is an array ordered by id or smth. That way loadProjectFromLocal should load all back into projectManager
 export function saveProjectToLocal(project) {
     localStorage.setItem("projectData", JSON.stringify(project));
 }
 
+//This only loads the last created project. Need to aggregate over projectlists[] to load them all
 export function loadProjectFromLocal() {
     let loadedProject = JSON.parse(localStorage.getItem("projectData"));
-    // add properties and functions back to loaded project
+     
+    // Check if there's no project loaded
+    if (!loadedProject) {
+        console.log("No project data found in local storage.");
+        return null;
+    }
+
+    // Add properties and functions back to loaded project
     loadedProject = {
         projectName: loadedProject ? loadedProject.projectName : "Default",
         todoItems: loadedProject ? loadedProject.todoItems : [],
@@ -35,86 +44,62 @@ export function loadProjectFromLocal() {
             projectManager.deleteTodoItemFromAllProjects(todoId);
         },
     };
+    
+    // Find the project in projectManager with the same projectName
+    const projectIndex = projectManager.projectLists.findIndex(project => project.projectName === loadedProject.projectName);
+    
+    if (projectIndex !== -1) {
+        // Replace the existing project with the loaded project
+        projectManager.projectLists[projectIndex] = loadedProject;
+    } else {
+        // If no matching project found, add the loaded project to projectManager
+        projectManager.addProjectToList(loadedProject);
+    }
+    
     return loadedProject;
 }
 
-// export function saveDOMData(){
-//     const mainContainer = document.querySelector('main');
-//     const projectTitles = mainContainer.querySelectorAll('.project-title');
+
+
+export function addProjectFunctionsBack(project, projectManager) {
+    // Add properties and functions back to the loaded project
+    project.projectName = project ? project.projectName : "Default";
+    project.todoItems = project ? project.todoItems : [];
+    project.getTodoItems = () => [...project.todoItems];
+    project.addTodoItems = (todoItem) => project.todoItems.push(todoItem);
+    project.deleteTodoItem = (todoId) => {
+        projectManager.deleteTodoItemFromAllProjects(todoId);
+    };
+    return project;
+}
+
+
+// 
+export function saveDOMData(){
+    const mainContainer = document.querySelector('main');
+    const projectTitles = mainContainer.querySelectorAll('.project-title');
     
-//     const data = {
-//         mainContent: mainContainer.innerHTML,
-//         projectTitles: Array.from(projectTitles).map(title => title.innerHTML),
-//         todoItems: saveToDoData(projectManager.projectLists.flatMap(project => project.todoItems)),
-//         projectLists: saveProjectData(projectManager.projectLists)
-//     };
+    const data = {
+        mainContent: mainContainer.innerHTML,
+        projectTitles: Array.from(projectTitles).map(title => title.innerHTML),
+    };
+    localStorage.setItem("DOMData", JSON.stringify(data));
+    console.log("DOM data saved:", data);
+}
+// So far, it does load, but the DOM data have no association with the datastructure and logic above
+// keep getting function reference errors, which suggests that projects aren't being bound properly.
+export function loadDOMData(){
+    const mainContainer = document.querySelector('main');
+    const savedData = JSON.parse(localStorage.getItem("DOMData"));
 
-//     localStorage.setItem("DOMData", JSON.stringify(data));
-//     console.log("DOM data saved:", data);
-// }
+    if (savedData) {
+        mainContainer.innerHTML = savedData.mainContent;
 
-// export function loadDOMData(){
-//     const mainContainer = document.querySelector('main');
-//     const savedData = JSON.parse(localStorage.getItem("DOMData"));
+        const projectTitles = mainContainer.querySelectorAll('.project-title');
+        const savedTitles = savedData.projectTitles;
 
-//     if (savedData) {
-//         mainContainer.innerHTML = savedData.mainContent;
-
-//         const projectTitles = mainContainer.querySelectorAll('.project-title');
-//         const savedTitles = savedData.projectTitles;
-
-//         projectTitles.forEach((title, index) => {
-//             title.innerHTML = savedTitles[index];
-//         });
-
-//         const savedTodoItems = savedData.todoItems || [];
-//         const savedProjectLists = savedData.projectLists || [];
-
-//         // Update the project manager with the loaded data
-//         savedProjectLists.forEach(savedProject => {
-//             const project = createProjectList(savedProject.projectName);
-//             savedProject.todoItems.forEach(todoItem => {
-//                 project.addTodoItems(todoItem);
-//             });
-//         });
-
-//         // Update todo items
-//         projectManager.projectLists.forEach(project => {
-//             const savedProject = savedProjectLists.find(savedProject => savedProject.projectName === project.projectName);
-//             if (savedProject) {
-//                 project.todoItems.forEach(todoItem => {
-//                     const savedTodoItem = savedTodoItems.find(item => item.id === todoItem.id);
-//                     if (savedTodoItem) {
-//                         todoItem.description = savedTodoItem.description;
-//                         todoItem.priority = savedTodoItem.priority;
-//                         todoItem.dueDate = savedTodoItem.dueDate;
-//                         todoItem.status = savedTodoItem.status;
-//                     }
-//                 });
-//             }
-//         });
-//         projectManager.projectLists = savedProjectLists;
-//     }
-// }
-
-// // When a todo is generated, it will save all properties/index of that todo
-// function saveToDoData(todoItems) {
-//     localStorage.setItem("todoItems", JSON.stringify(todoItems));
-// }
-
-// function loadToDoData() {
-//     const savedTodoItems = JSON.parse(localStorage.getItem("todoItems"));
-//     return savedTodoItems || [];
-// }
-
-
-// // When a new project is created, or a todo is added to it, it will save all the data for the project array
-// function saveProjectData(projectLists) {
-//     localStorage.setItem("projectLists", JSON.stringify(projectLists));
-// }
-
-// function loadProjectData() {
-//     const savedProjectLists = JSON.parse(localStorage.getItem("projectLists"));
-//     return savedProjectLists || [];
-// }
-
+        projectTitles.forEach((title, index) => {
+            title.innerHTML = savedTitles[index];
+        });
+    }
+}
