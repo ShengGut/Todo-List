@@ -1,4 +1,4 @@
-import { saveDOMData } from "./handleLocalStorage";
+import { saveDOMData, saveProjectToLocal } from "./handleLocalStorage";
 
 export default function deleteTodo(activeProject) {
     document.addEventListener('DOMContentLoaded', function() {
@@ -12,6 +12,7 @@ export default function deleteTodo(activeProject) {
                     const todoItemId = todoItem.getAttribute('data-id');
                     const todoItemName = todoItem.querySelector('description').textContent;
                     activeProject.deleteTodoItem(parseInt(todoItemId)); // logically removes from array
+                    saveProjectToLocal(activeProject);
                     deleteTodoItemDOM(todoItemId); // removes from DOM
                     saveDOMData();
                     console.log(`Todo Item deleted: ${todoItemName}`)

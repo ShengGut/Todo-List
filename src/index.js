@@ -13,8 +13,12 @@ import projectManager from './projectManager.js';
 import { getTodoFromLocal, getTodoIdFromLocal, loadProjectFromLocal, addProjectFunctionsBack, loadDOMData } from './handleLocalStorage.js';
 import { loadProjectManager } from './projectManager.js';
 
-const loadedProjectManager = loadProjectManager();
+// let loadedProjectManager = loadProjectManager() ? loadProjectManager() : projectManager;
 
+// loadedProjectManager.projectLists.forEach(project => {
+//     addProjectFunctionsBack(project, loadedProjectManager);
+// });
+//checking original state of projectManager
 projectManager.projectLists.forEach(project => {
     addProjectFunctionsBack(project, projectManager);
 });
@@ -22,28 +26,33 @@ projectManager.projectLists.forEach(project => {
 loadProjectFromLocal();
 loadDOMData();
 
-let defaultProject = loadedProjectManager ? loadedProjectManager.projectLists[0] : createProjectList("Default");
+let defaultProject = projectManager ? 
+projectManager.projectLists.find(project => project.projectName === "Default") || createProjectList("Default") :
+    createProjectList("Default");
 
 let activeProject = defaultProject;
+
 document.addEventListener("DOMContentLoaded", function () {
     //loadDOMData();
    console.log("Todo saved:", getTodoFromLocal());
    console.log("Todo Id saved:", getTodoIdFromLocal());
    console.log("Default project:", defaultProject);
+   console.log("activeProject project:", activeProject);
    // console.log("Project loaded:", loadProjectFromLocal());
-   console.log("Project Manager inner var:", projectManager);
-     switchProject(defaultProject);
-//     toggleCompletion(activeProject);
-//    handleTodoFormInput(activeProject);
-//     deleteTodo(activeProject);
+   console.log("Project Manager var:", projectManager);
+   console.log("Project Manager value:", projectManager);
+     activeProject = switchProject(defaultProject, projectManager);
+     toggleCompletion(activeProject);
+     handleTodoFormInput(activeProject);
+     deleteTodo(activeProject);
     document.querySelector('.new-list').addEventListener('click', function() {
         handleNewProject();
-        activeProject = switchProject(defaultProject); // Update activeProject so that todos can be deleted in the actively-selected project
+        activeProject = switchProject(defaultProject, projectManager); // Update activeProject so that todos can be deleted in the actively-selected project
         handleTodoFormInput(activeProject);
         deleteTodo(activeProject);
     });
 });
-//switchProject(defaultProject);
+//activeProject = switchProject(defaultProject, loadedProjectManager);
 toggleCompletion(activeProject);
 
 handleTodoFormInput(activeProject);

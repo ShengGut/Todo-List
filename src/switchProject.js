@@ -1,23 +1,23 @@
 import projectManager from "./projectManager";
 import handleTodoFormInput from "./todoFormHandler";
 import createDOMTodo from "./createDOMTodo";
-import { saveProjectToLocal } from "./handleLocalStorage";
+import { saveProjectToLocal, addProjectFunctionsBack } from "./handleLocalStorage";
 
-export default function switchProject(defaultProject) {
+export default function switchProject(defaultProject, loadedProjectManager) {
     let activeProject = defaultProject;
 
     // Use event delegation to check for newly-added project-title
     document.body.addEventListener('click', function(event) {
         if (event.target.classList.contains('project-title')) {
             const projectName = event.target.textContent;
-            const clickedProject = projectManager.projectLists.find(project => project.projectName === projectName); // Find the project in the array
+            const clickedProject = loadedProjectManager.projectLists.find(project => project.projectName === projectName); // Find the project in the array
 
             // Change activeProject based on the clicked project
             if (clickedProject) {
                 activeProject = clickedProject;
+                
+                addProjectFunctionsBack(activeProject, loadedProjectManager);
                 handleTodoFormInput(activeProject);
-                console.log(`Now project ${activeProject.projectName}`);
-                console.log(activeProject.getTodoItems());
                 // Clear DOM elements for mainContainer when switching to the selected project
                 const mainContainer = document.querySelector('.main-container');
                 mainContainer.innerHTML = "";
@@ -28,6 +28,7 @@ export default function switchProject(defaultProject) {
                 });
          
               saveProjectToLocal(activeProject);
+              console.log("Now project:", activeProject);
             }
         }
     });
